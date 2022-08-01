@@ -20,7 +20,7 @@ const Header = (props) => {
         </Search>
         <Nav>
           <NavListWrap>
-            <NavList>
+            <NavList className="active">
               <a>
                 <img src="/images/nav-home.svg" />
                 <span>Home</span>
@@ -134,6 +134,19 @@ const NavListWrap = styled.ul`
   display: flex;
   flex-wrap: nowrap;
   list-style-type: none;
+  .active {
+    span:after {
+      content: "";
+      transform: scaleX(1);
+      border-bottom: 2px solid var(--white, #fff);
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      transition: transform .2s ease-in-out;
+      width: 100%;
+      border-color: rgba(0, 0, 0, 0.9);
+    }
+  }
 `;
 const NavList = styled.li`
   display: flex;
