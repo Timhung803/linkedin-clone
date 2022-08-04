@@ -286,6 +286,7 @@ const SocialActions = styled.div`
     svg {
       height: 24px;
       width: 24px;
+      margin: 0 4px 0 -2px;
     }
 
     @media (min-width: 768px) {
