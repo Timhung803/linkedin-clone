@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BiSearch } from "react-icons/bi";
 import { connect } from "react-redux";
+import { signOutAPI } from "../actions";
 
 const Header = (props) => {
   return (
@@ -63,7 +64,7 @@ const Header = (props) => {
                   <img src="/images/down-icon.svg" alt="" />
                 </span>
               </a>
-              <SignOut>
+              <SignOut onClick={() => props.signOut()}>
                 <a>Sign out</a>
               </SignOut>
             </User>
@@ -221,6 +222,7 @@ const SignOut = styled.div`
   transition-duration: 167ms;
   text-align: center;
   display: none;
+  cursor: default;
 `;
 
 const User = styled(NavList)`
@@ -256,6 +258,8 @@ const mapStateToPorops = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  signOut: () => dispatch(signOutAPI()),
+});
 
 export default connect(mapStateToPorops, mapDispatchToProps)(Header);
