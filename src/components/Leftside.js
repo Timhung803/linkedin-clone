@@ -107,7 +107,7 @@ const AddPhotoText = styled.div`
   font-weight: 500;
 `;
 const Widget = styled.div`
-  border-bottom: 1px solidrgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   padding-top: 12px;
   padding-bottom: 12px;
 
@@ -185,6 +185,7 @@ const CommunityCard = styled(ArtCard)`
       text-decoration: none;
       border-top: 1px solid #d6cec2;
       padding: 12px;
+      cursor: pointer;
       &:hover {
         background-color: rgba(0, 0, 0, 0.08);
       }
