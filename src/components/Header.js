@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BiSearch } from "react-icons/bi";
+import { connect } from "react-redux";
 
 const Header = (props) => {
   return (
@@ -52,9 +53,14 @@ const Header = (props) => {
             </NavList>
             <User>
               <a>
-                <img src="/images/user.svg" alt="" />
-                <span>Me
-                <img src="/images/down-icon.svg" alt="" />
+                {props.user && props.user.photoURL ? (
+                  <img src={props.user.photoURL} alt="" />
+                ) : (
+                  <img src="/images/user.svg" alt="" />
+                )}
+                <span>
+                  Me
+                  <img src="/images/down-icon.svg" alt="" />
                 </span>
               </a>
               <SignOut>
@@ -244,5 +250,12 @@ const User = styled(NavList)`
 const Work = styled(User)`
   border-left: 1px solid rgba(0, 0, 0, 0.08);
 `;
+const mapStateToPorops = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToPorops, mapDispatchToProps)(Header);
