@@ -117,7 +117,6 @@ const Widget = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 4px 12px;
-
     &:hover {
       background-color: rgba(0, 0, 0, 0.08);
     }
