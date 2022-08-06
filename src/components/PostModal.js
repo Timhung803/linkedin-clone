@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import { CgClose } from "react-icons/cg";
+import { HiOutlinePhotograph } from "react-icons/hi";
+import { BsFillPlayBtnFill } from "react-icons/bs";
+import { FaShare } from "react-icons/fa";
+import { BiCommentDetail } from "react-icons/bi";
 
 const PostModal = (props) => {
   return (
@@ -17,6 +21,23 @@ const PostModal = (props) => {
             <span>Name</span>
           </UserInfo>
         </SharedContent>
+        <SharedCreation>
+          <AttachAssets>
+            <AssetButton>
+              <HiOutlinePhotograph />
+            </AssetButton>
+            <AssetButton>
+              <BsFillPlayBtnFill />
+            </AssetButton>
+          </AttachAssets>
+          <ShareComment>
+            <AssetButton>
+              <BiCommentDetail />
+              Anyone
+            </AssetButton>
+          </ShareComment>
+          <PostButton>Post</PostButton>
+        </SharedCreation>
       </Content>
     </Container>
   );
@@ -96,6 +117,55 @@ const UserInfo = styled.div`
     font-weight: 600;
     line-height: 1.5;
     margin-left: 5px;
+  }
+`;
+
+const SharedCreation = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px 12px 16px;
+`;
+
+const AssetButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: auto;
+  color: rgba(0, 0, 0, 0.5);
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+`;
+const AttachAssets = styled.div`
+  align-items: center;
+  display: flex;
+  padding-right: 8px;
+  ${AssetButton} {
+    width: 40px;
+  }
+`;
+const ShareComment = styled.div`
+  padding-left: 8px;
+  margin-right: auto;
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  ${AssetButton} {
+    svg {
+      margin-right: 5px;
+    }
+  }
+`;
+
+const PostButton = styled.button`
+  min-width: 60px;
+  border-radius: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background: #0a66c2;
+  color: white;
+  &:hover {
+    background: #004182;
   }
 `;
 export default PostModal;
