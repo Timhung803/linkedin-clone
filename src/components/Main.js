@@ -6,6 +6,7 @@ import { AiOutlineEllipsis } from "react-icons/ai";
 import { BsHandThumbsUp } from "react-icons/bs";
 import { BiCommentDetail } from "react-icons/bi";
 import { IoIosSend } from "react-icons/io";
+import PostModal from "./PostModal";
 
 const Main = (props) => {
   return (
@@ -94,6 +95,7 @@ const Main = (props) => {
           </SocialActions>
         </Article>
       </div>
+      <PostModal />
     </Container>
   );
 };
