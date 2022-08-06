@@ -251,10 +251,17 @@ const SocialCount = styled.ul`
   border-bottom: 1px solid #e9e5df;
   list-style: none;
   li {
+    /* img {
+      color: #6262f3;
+      font-size: 16px;
+    } */
     margin-right: 5px;
+    /* margin-left: auto; */
     font-size: 12px;
     button {
       display: flex;
+      /* border: none;
+      background-color: white; */
     }
   }
 `;
@@ -263,7 +270,7 @@ const SocialActions = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  /* justify-content: space-around; */
+  justify-content: space-around;
   margin: 0;
   min-height: 40px;
   padding: 4px 8px;
@@ -271,9 +278,9 @@ const SocialActions = styled.div`
     display: inline-flex;
     align-items: center;
     padding: 8px;
-    color: #0a66c2;
+    /* color: #0a66c2; */
 
-    /* margin: 0 4px 0 -2px;
+    margin: 0 4px 0 -2px;
     outline: none;
     color: rgba(0, 0, 0, 0.6);
     font-size: 14px;
@@ -281,7 +288,7 @@ const SocialActions = styled.div`
     min-height: 48px;
     background: transparent;
     border: none;
-    font-weight: 600; */
+    font-weight: 600;
 
     svg {
       height: 24px;

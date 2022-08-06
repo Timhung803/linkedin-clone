@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { connect } from "react-redux/es/exports";
 
 const Leftside = (props) => {
   return (
@@ -8,7 +9,9 @@ const Leftside = (props) => {
           <CardBackground />
           <a>
             <Photo />
-            <Link>Welcome, there!</Link>
+            <Link>
+              Welcome, {props.user ? props.user.displayName : "there"}!
+            </Link>
           </a>
           <a>
             <AddPhotoText>Add a photo</AddPhotoText>
@@ -104,7 +107,7 @@ const AddPhotoText = styled.div`
   margin-top: 4px;
   font-size: 12px;
   line-height: 1.33;
-  font-weight: 500;
+  font-weight: 600;
 `;
 const Widget = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
@@ -191,4 +194,10 @@ const CommunityCard = styled(ArtCard)`
     }
   }
 `;
-export default Leftside;
+
+const mapStateToPorops = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+export default connect(mapStateToPorops)(Leftside);
