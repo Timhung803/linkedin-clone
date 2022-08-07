@@ -4,42 +4,61 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { BsFillPlayBtnFill } from "react-icons/bs";
 import { FaShare } from "react-icons/fa";
 import { BiCommentDetail } from "react-icons/bi";
+import { useState } from "react";
 
 const PostModal = (props) => {
+  const [editorText, setEditorText] = useState("");
+
+  const reset = (e) => {
+    setEditorText("");
+    props.handleClick(e);
+  };
   return (
-    <Container>
-      <Content>
-        <Header>
-          <h2>Create a post</h2>
-          <button>
-            <CgClose />
-          </button>
-        </Header>
-        <SharedContent>
-          <UserInfo>
-            <img src="/images/user.svg" alt="" />
-            <span>Name</span>
-          </UserInfo>
-        </SharedContent>
-        <SharedCreation>
-          <AttachAssets>
-            <AssetButton>
-              <HiOutlinePhotograph />
-            </AssetButton>
-            <AssetButton>
-              <BsFillPlayBtnFill />
-            </AssetButton>
-          </AttachAssets>
-          <ShareComment>
-            <AssetButton>
-              <BiCommentDetail />
-              Anyone
-            </AssetButton>
-          </ShareComment>
-          <PostButton>Post</PostButton>
-        </SharedCreation>
-      </Content>
-    </Container>
+    <>
+      {props.showModal === "open" && (
+        <Container>
+          <Content>
+            <Header>
+              <h2>Create a post</h2>
+              <button onClick={(event) => reset(event)}>
+                <CgClose />
+              </button>
+            </Header>
+            <SharedContent>
+              <UserInfo>
+                <img src="/images/user.svg" alt="" />
+                <span>Name</span>
+              </UserInfo>
+              <Editor>
+                <textarea
+                  value={editorText}
+                  onChange={(e) => setEditorText(e.target.value)}
+                  placeholder="What do you want to talk about?"
+                  autoFocus={true}
+                ></textarea>
+              </Editor>
+            </SharedContent>
+            <SharedCreation>
+              <AttachAssets>
+                <AssetButton>
+                  <HiOutlinePhotograph />
+                </AssetButton>
+                <AssetButton>
+                  <BsFillPlayBtnFill />
+                </AssetButton>
+              </AttachAssets>
+              <ShareComment>
+                <AssetButton>
+                  <BiCommentDetail />
+                  Anyone
+                </AssetButton>
+              </ShareComment>
+              <PostButton>Post</PostButton>
+            </SharedCreation>
+          </Content>
+        </Container>
+      )}
+    </>
   );
 };
 
@@ -52,6 +71,7 @@ const Container = styled.div`
   z-index: 9999;
   color: black;
   background-color: rgba(0, 0, 0, 0.8);
+  animation: fadeIn 0.3s;
 `;
 
 const Content = styled.div`
@@ -84,7 +104,10 @@ const Header = styled.div`
     width: 40px;
     min-width: auto;
     color: rgba(0, 0, 0, 0.15);
-    svg {
+    align-items: center;
+    display: flex;
+    svg,
+    img {
       pointer-events: none;
       height: 24px;
       width: 24px;
@@ -166,6 +189,21 @@ const PostButton = styled.button`
   color: white;
   &:hover {
     background: #004182;
+  }
+`;
+
+const Editor = styled.div`
+  padding: 12px 24px;
+  textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: none;
+  }
+  input {
+    width: 100%;
+    height: 35px;
+    font-size: 16px;
+    margin-top: 20px;
   }
 `;
 export default PostModal;
