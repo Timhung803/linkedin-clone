@@ -8,6 +8,17 @@ import { useState } from "react";
 
 const PostModal = (props) => {
   const [editorText, setEditorText] = useState("");
+  const [shareImage, setShareImage] = useState("");
+
+  const handleChange = (e) => {
+    const image = e.target.files[0];
+    if (image === "" || image === undefined) {
+      alert(`not an image, the file is a ${typeof image}`);
+      return;
+      console.log("hi");
+    }
+    setShareImage(image);
+  };
 
   const reset = (e) => {
     setEditorText("");
@@ -35,7 +46,21 @@ const PostModal = (props) => {
                   onChange={(e) => setEditorText(e.target.value)}
                   placeholder="What do you want to talk about?"
                   autoFocus={true}
-                ></textarea>
+                />
+                <UploadImage>
+                  <input
+                    type="file"
+                    accept="image/gif, image/jpeg, image/png"
+                    name="image"
+                    id="file"
+                    style={{ display: "none" }}
+                    onChange={handleChange}
+                  />
+                  <p>
+                    <label htmlFor="file">Select an image to share</label>
+                  </p>
+                  {shareImage && <img src={URL.createObjectURL(shareImage)} />}
+                </UploadImage>
               </Editor>
             </SharedContent>
             <SharedCreation>
@@ -53,7 +78,9 @@ const PostModal = (props) => {
                   Anyone
                 </AssetButton>
               </ShareComment>
-              <PostButton>Post</PostButton>
+              <PostButton disabled={!editorText ? true : false}>
+                Post
+              </PostButton>
             </SharedCreation>
           </Content>
         </Container>
@@ -185,10 +212,11 @@ const PostButton = styled.button`
   border-radius: 20px;
   padding-left: 16px;
   padding-right: 16px;
-  background: #0a66c2;
-  color: white;
+  background: ${(props) => (props.disabled ? "rgba(0, 0, 0, 0.8)" : "#0a66c2")};
+  color: ${(props) => (props.disabled ? "rgba(1, 1, 1, 0.2)" : "white")};
   &:hover {
-    background: #004182;
+    background: ${(props) =>
+      props.disabled ? "rgba(0, 0, 0, 0.8)" : "#004182"};
   }
 `;
 
@@ -206,4 +234,11 @@ const Editor = styled.div`
     margin-top: 20px;
   }
 `;
+const UploadImage = styled.div`
+  text-align: center;
+  img {
+    width: 100%;
+  }
+`;
+
 export default PostModal;
