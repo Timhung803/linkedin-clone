@@ -210,13 +210,15 @@ const ShareComment = styled.div`
 const PostButton = styled.button`
   min-width: 60px;
   border-radius: 20px;
+  border: none;
   padding-left: 16px;
   padding-right: 16px;
-  background: ${(props) => (props.disabled ? "rgba(0, 0, 0, 0.8)" : "#0a66c2")};
-  color: ${(props) => (props.disabled ? "rgba(1, 1, 1, 0.2)" : "white")};
+  background: ${(props) =>
+    props.disabled ? "rgba(0, 0, 0, 0.08)" : "#0a66c2"};
+  color: ${(props) => (props.disabled ? "rgba(1, 1, 1, 0.3)" : "white")};
   &:hover {
     background: ${(props) =>
-      props.disabled ? "rgba(0, 0, 0, 0.8)" : "#004182"};
+      props.disabled ? "rgba(0, 0, 0, 0.08)" : "#004182"};
   }
 `;
 
@@ -226,6 +228,8 @@ const Editor = styled.div`
     width: 100%;
     min-height: 100px;
     resize: none;
+    border: none;
+    outline: none;
   }
   input {
     width: 100%;
