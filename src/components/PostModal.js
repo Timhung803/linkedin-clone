@@ -5,6 +5,7 @@ import { BsFillPlayBtnFill } from "react-icons/bs";
 import { FaShare } from "react-icons/fa";
 import { BiCommentDetail } from "react-icons/bi";
 import { useState } from "react";
+import ReactPlayer from "react-player";
 
 const PostModal = (props) => {
   const [editorText, setEditorText] = useState("");
