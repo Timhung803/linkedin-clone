@@ -34,8 +34,7 @@ const PostModal = (props) => {
 
   const postArticle = (e) => {
     e.preventDefault();
-    if (e.target !== e.curretTarget) {
-      console.log("post_name");
+    if (e.target !== e.currentTarget) {
       return;
     }
 
