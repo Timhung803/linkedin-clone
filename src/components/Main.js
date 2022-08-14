@@ -8,6 +8,8 @@ import { BsHandThumbsUp } from "react-icons/bs";
 import { BiCommentDetail } from "react-icons/bi";
 import { IoIosSend } from "react-icons/io";
 import PostModal from "./PostModal";
+import { TailSpin } from "react-loader-spinner";
+import { connect } from "react-redux";
 
 const Main = (props) => {
   const [showModal, setShowModal] = useState("close");
@@ -34,7 +36,7 @@ const Main = (props) => {
       <ShareBox>
         <div>
           {props.user && props.user.photoURL ? (
-            <img src={props.user.photoURL} />
+            <img src={[props.user.photoURL]} />
           ) : (
             <img src="/images/user.svg" alt="" />
           )}
@@ -61,7 +63,16 @@ const Main = (props) => {
           </button>
         </div>
       </ShareBox>
-      <div>
+      <Content>
+        {props.loading && (
+          <TailSpin
+            color="#00BFFF"
+            height={30}
+            width={30}
+            wrapperStyle={{ display: "flex", justifyContent: "center" }}
+          />
+        )}
+
         <Article>
           <SharedActor>
             <a>
@@ -119,7 +130,7 @@ const Main = (props) => {
             </button>
           </SocialActions>
         </Article>
-      </div>
+      </Content>
       <PostModal showModal={showModal} handleClick={handleClick} />
     </Container>
   );
@@ -330,4 +341,17 @@ const SocialActions = styled.div`
     }
   }
 `;
-export default Main;
+
+const Content = styled.div`
+  text-align: center;
+`;
+
+const mapStateToProps = (state) => {
+  return {
+    loading: state.articleState.loading,
+    user: state.userState.user,
+  };
+};
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
