@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { FaPhotoVideo, FaShare } from "react-icons/fa";
@@ -10,9 +10,15 @@ import { IoIosSend } from "react-icons/io";
 import PostModal from "./PostModal";
 import { TailSpin } from "react-loader-spinner";
 import { connect } from "react-redux";
+import { getArticlesAPI } from "../actions";
+import ReactPlayer from "react-player";
 
 const Main = (props) => {
   const [showModal, setShowModal] = useState("close");
+
+  useEffect(() => {
+    props.getArticles();
+  }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -32,107 +38,124 @@ const Main = (props) => {
     }
   };
   return (
-    <Container>
-      <ShareBox>
-        <div>
-          {props.user && props.user.photoURL ? (
-            <img src={[props.user.photoURL]} />
-          ) : (
-            <img src="/images/user.svg" alt="" />
-          )}
-          <button onClick={handleClick} disabled={props.loading ? true : false}>
-            Start a post
-          </button>
-        </div>
-        <div>
-          <button>
-            <HiOutlinePhotograph style={{ color: "#378fe9" }} size={24} />
-            <span>Photo</span>
-          </button>
-          <button>
-            <FaPhotoVideo style={{ color: "#5f9b41" }} size={24} />
-            <span>Video</span>
-          </button>
-          <button>
-            <HiOutlinePhotograph style={{ color: "#c37d16" }} size={24} />
-            <span>Event</span>
-          </button>
-          <button>
-            <MdOutlineArticle style={{ color: "#e16745" }} size={24} />
-            <span>Write article</span>
-          </button>
-        </div>
-      </ShareBox>
-      <Content>
-        {props.loading && (
-          <TailSpin
-            color="#00BFFF"
-            height={30}
-            width={30}
-            wrapperStyle={{ display: "flex", justifyContent: "center" }}
-          />
-        )}
-
-        <Article>
-          <SharedActor>
-            <a>
-              <img src="/images/user.svg" alt="" />
-              <div>
-                <span>Title</span>
-                <span>Info</span>
-                <span>Date</span>
-              </div>
-            </a>
-            <button>
-              <AiOutlineEllipsis />
-            </button>
-          </SharedActor>
-          <Description>Description</Description>
-          <SharedImg>
-            <a>
-              <img src="/images/IMG_1382.JPG" alt="" />
-            </a>
-          </SharedImg>
-          <SocialCount>
-            <li>
-              <button>
-                <img
-                  src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
-                  alt=""
-                />
-                <img
-                  src="https://static-exp1.licdn.com/sc/h/5thsbmikm6a8uov24ygwd914f"
-                  alt=""
-                />
-                <span>75</span>
+    <>
+      {props.articles.length === 0 ? (
+        <p>There are no articles</p>
+      ) : (
+        <Container>
+          <ShareBox>
+            <div>
+              {props.user && props.user.photoURL ? (
+                <img src={[props.user.photoURL]} />
+              ) : (
+                <img src="/images/user.svg" alt="" />
+              )}
+              <button
+                onClick={handleClick}
+                disabled={props.loading ? true : false}
+              >
+                Start a post
               </button>
-            </li>
-            <li>
-              <a>2 comments</a>
-            </li>
-          </SocialCount>
-          <SocialActions>
-            <button>
-              <BsHandThumbsUp />
-              <span>Like</span>
-            </button>
-            <button>
-              <BiCommentDetail />
-              <span>Comments</span>
-            </button>
-            <button>
-              <FaShare />
-              <span>Share</span>
-            </button>
-            <button>
-              <IoIosSend />
-              <span>Send</span>
-            </button>
-          </SocialActions>
-        </Article>
-      </Content>
-      <PostModal showModal={showModal} handleClick={handleClick} />
-    </Container>
+            </div>
+            <div>
+              <button>
+                <HiOutlinePhotograph style={{ color: "#378fe9" }} size={24} />
+                <span>Photo</span>
+              </button>
+              <button>
+                <FaPhotoVideo style={{ color: "#5f9b41" }} size={24} />
+                <span>Video</span>
+              </button>
+              <button>
+                <HiOutlinePhotograph style={{ color: "#c37d16" }} size={24} />
+                <span>Event</span>
+              </button>
+              <button>
+                <MdOutlineArticle style={{ color: "#e16745" }} size={24} />
+                <span>Write article</span>
+              </button>
+            </div>
+          </ShareBox>
+          <Content>
+            {props.loading && (
+              <TailSpin
+                color="#00BFFF"
+                height={30}
+                width={30}
+                wrapperStyle={{ display: "flex", justifyContent: "center" }}
+              />
+            )}
+            {props.articles.length > 0 &&
+              props.articles.map((article, key) => (
+                <Article key={key}>
+                  <SharedActor>
+                    <a>
+                      <img src={article.actor.image} alt="" />
+                      <div>
+                        <span>{article.actor.title}</span>
+                        <span>{article.actor.description}</span>
+                        <span>
+                          {article.actor.date.toDate().toLocaleDateString()}
+                        </span>
+                      </div>
+                    </a>
+                    <button>
+                      <AiOutlineEllipsis />
+                    </button>
+                  </SharedActor>
+                  <Description>{article.description}</Description>
+                  <SharedImg>
+                    <a>
+                      {!article.SharedImg && article.video ? (
+                        <ReactPlayer width={"100%"} url={article.video} />
+                      ) : (
+                        article.sharedImg && <img src={article.sharedImg} />
+                      )}
+                    </a>
+                  </SharedImg>
+                  <SocialCount>
+                    <li>
+                      <button>
+                        <img
+                          src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
+                          alt=""
+                        />
+                        <img
+                          src="https://static-exp1.licdn.com/sc/h/5thsbmikm6a8uov24ygwd914f"
+                          alt=""
+                        />
+                        <span>75</span>
+                      </button>
+                    </li>
+                    <li>
+                      <a>{article.comments}</a>
+                    </li>
+                  </SocialCount>
+                  <SocialActions>
+                    <button>
+                      <BsHandThumbsUp />
+                      <span>Like</span>
+                    </button>
+                    <button>
+                      <BiCommentDetail />
+                      <span>Comments</span>
+                    </button>
+                    <button>
+                      <FaShare />
+                      <span>Share</span>
+                    </button>
+                    <button>
+                      <IoIosSend />
+                      <span>Send</span>
+                    </button>
+                  </SocialActions>
+                </Article>
+              ))}
+          </Content>
+          <PostModal showModal={showModal} handleClick={handleClick} />
+        </Container>
+      )}
+    </>
   );
 };
 const Container = styled.div`
@@ -298,8 +321,8 @@ const SocialCount = styled.ul`
     font-size: 12px;
     button {
       display: flex;
-      /* border: none;
-      background-color: white; */
+      border: none;
+      background-color: white;
     }
   }
 `;
@@ -350,8 +373,11 @@ const mapStateToProps = (state) => {
   return {
     loading: state.articleState.loading,
     user: state.userState.user,
+    articles: state.articleState.articles,
   };
 };
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  getArticles: () => dispatch(getArticlesAPI()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
